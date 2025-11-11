@@ -35,12 +35,14 @@ export function useEditPost(opts: Opts = {}) {
         tx.object(myProfileId),
         tx.object(postId),
         tx.pure.string(newContent),
+		tx.object('0x6')
       ],
     });
 
     const res = await signAndExecute({ transaction: tx });
     const digest = (res as any)?.digest;
     if (digest) await sui.waitForTransaction({ digest });
+	window.location.reload();
 
     onRefetch?.();
   }

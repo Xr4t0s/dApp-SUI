@@ -55,7 +55,7 @@ export default function App() {
         return <PageModal />;
 
       default:
-        return <ProfilesList onOpen={openProfile} />;
+        return hasProfile ? <ProfilesList onOpen={openProfile} /> : <CreateProfile />;
     }
   }, [route, hasProfile, myProfileId, currentAccount?.address]);
 

@@ -141,6 +141,7 @@ export function useAddCommentTx(postId?: string | null, myProfileId?: string | n
             tx.object(myProfileId),
             tx.object(postId),
             tx.pure.string(text),
+			tx.object('0x6')
           ],
         });
 

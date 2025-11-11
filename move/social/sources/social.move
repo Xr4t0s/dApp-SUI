@@ -2,6 +2,7 @@ module social::social {
     use std::string::{Self as string, String};
     use sui::table::{Self as table, Table};
     use sui::event;
+	use sui::clock::Clock;
 
     public struct Profiles has key {
         id: UID,
@@ -79,6 +80,7 @@ module social::social {
         comments_of: Table<address, vector<address>>,
     }
 
+    /* ---------------------------- EVENTS ---------------------------- */
 
     public struct ProfileCreated has copy, drop, store { profile_id: address, owner: address }
     public struct AvatarUpdated  has copy, drop, store { profile_id: address }
@@ -276,12 +278,13 @@ module social::social {
         posts: &mut PostsRegistry,
         author_profile: &mut Profile,
         content: String,
+		clock: &Clock,
         ctx: &mut TxContext
     ) {
         let sender = tx_context::sender(ctx);
         assert!(author_profile.owner == sender, 20);
 
-        let now = tx_context::epoch(ctx);
+        let now = clock.timestamp_ms();
         let pid = object::uid_to_address(&author_profile.id);
 
         let post = Post {
@@ -318,6 +321,7 @@ module social::social {
         author_profile: &mut Profile,
         post: &mut Post,
         new_content: String,
+		clock: &Clock,
         ctx: &mut TxContext
     ) {
         let sender = tx_context::sender(ctx);
@@ -327,7 +331,7 @@ module social::social {
         assert!(post.author == sender, 23);
 
         post.content = new_content;
-        post.updated_ms = tx_context::epoch(ctx);
+        post.updated_ms = clock.timestamp_ms();
         event::emit(PostEdited { post_id: object::uid_to_address(&post.id) });
     }
 
@@ -431,12 +435,13 @@ module social::social {
 		author_profile: &mut Profile,
 		post_id: address,
 		content: String,
+		clock: &Clock,
 		ctx: &mut TxContext
 	) {
 		let sender = tx_context::sender(ctx);
 		assert!(author_profile.owner == sender, 40);
 
-		let now = tx_context::epoch(ctx);
+		let now = clock.timestamp_ms();
 		let pid = object::uid_to_address(&author_profile.id);
 
 		let c = Comment {
@@ -474,6 +479,7 @@ module social::social {
         author_profile: &mut Profile,
         comment: &mut Comment,
         new_content: String,
+		clock: &Clock,
         ctx: &mut TxContext
     ) {
         let sender = tx_context::sender(ctx);
@@ -483,7 +489,7 @@ module social::social {
         assert!(comment.author == sender, 43);
 
         comment.content = new_content;
-        comment.updated_ms = tx_context::epoch(ctx);
+        comment.updated_ms = clock.timestamp_ms();
     }
 
     public fun delete_comment(

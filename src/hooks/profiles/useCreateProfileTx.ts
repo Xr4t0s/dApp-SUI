@@ -79,6 +79,7 @@ export function useCreateProfileTx(onCreated: (id: string) => void) {
             }
             setSuccessId(profileId);
             onCreated(profileId);
+			window.location.reload();
           } catch (err: any) {
             setErrorMsg(err?.message || "Erreur lors de la confirmation de la transaction.");
           }

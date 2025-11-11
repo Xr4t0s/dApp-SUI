@@ -74,3 +74,6 @@ sui client publish <path_to_move_file>
 > Vérifiez également que votre environnement Sui (`sui client active-env`) est bien configuré sur **testnet** avant le déploiement.
 
 ---
+
+
+

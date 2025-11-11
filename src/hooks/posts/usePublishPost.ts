@@ -52,7 +52,7 @@ export function usePublish(myProfileId?: string | null, postsRegId?: string | nu
         const tx = new Transaction();
         tx.moveCall({
           target: `${packageId}::social::publish_post`,
-          arguments: [tx.object(postsRegistryId!), tx.object(myProfileId!), tx.pure.string(body)],
+          arguments: [tx.object(postsRegistryId!), tx.object(myProfileId!), tx.pure.string(body), tx.object('0x6')],
         });
 
         signAndExecute(
@@ -63,6 +63,7 @@ export function usePublish(myProfileId?: string | null, postsRegId?: string | nu
               finally {
                 setPosts?.((prev) => prev.filter((p) => p.id !== tempId));
                 setPublishing(false);
+				window.location.reload();
               }
             },
             onError: (e) => {
