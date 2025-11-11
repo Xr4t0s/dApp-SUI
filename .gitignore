@@ -1,0 +1,48 @@
+# 🚀 Node.js dependencies
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+Move.lock
+
+# ⚡ Vite build files
+dist/
+build/
+.vite/
+
+# 🔍 Logs & debug
+pnpm-debug.log*
+debug.log
+
+# ⚙️ IDE / Editor settings
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ⚡ TypeScript build
+*.tsbuildinfo
+
+# 🏗️ Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# 📦 Output files
+out/
+.cache/
+coverage/
+
+# 🚀 RainbowKit & Wallet Data (éviter de versionner les wallets stockés en cache)
+.walletconnect/
+.wagmi/
+
+# ⚡ Next.js (si tu l'utilises avec Vite)
+.next/
+.vercel/
+now/
+
+# 🔥 Firebase & Cloud
+.firebase/
+.vercel
